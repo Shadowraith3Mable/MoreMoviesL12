@@ -75,21 +75,47 @@ public class ModifyMovies extends AppCompatActivity {
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 DBHelper db = new DBHelper(ModifyMovies.this);
                 db.deleteMovie(data.getId());
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(ModifyMovies.this);
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to delete the movie" + etTitle.getText().toString());
+                myBuilder.setCancelable(false);
 
-                finish();
+                myBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                 finish();
+                    }
+                });
+
+                myBuilder.setNeutralButton("Cancel", null);
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onClick(View view) {
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(ModifyMovies.this);
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to discard the changes");
+                myBuilder.setCancelable(false);
+
+                myBuilder.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                myBuilder.setNegativeButton("Cancel", null);
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
-
     }
 }
 
